@@ -104,7 +104,7 @@ public class OrderPickup extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("00");
+        jLabel6.setText("Payment Unpaid");
 
         jLabel7.setText("Total Payment:");
 
