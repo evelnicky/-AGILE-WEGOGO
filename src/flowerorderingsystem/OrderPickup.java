@@ -20,19 +20,19 @@ import javax.swing.JOptionPane;
  */
 public class OrderPickup extends javax.swing.JFrame {
     
-    Connection con = null;
-    ResultSet rs = null;
-    PreparedStatement pst = null;
-    PreparedStatement pst1 = null;
-    
+    Connection con;
+    ResultSet rs;
+    PreparedStatement pst;
+    PreparedStatement pst1;
+     String host = "jdbc:derby://localhost:1527/FlowerOrdering";
+          String uName="admindb";
+          String uPass="admindb";
     /**
      * Creates new form OrderPickup
      */
     public OrderPickup() {
         initComponents();
-        String host = "jdbc:derby://localhost:1527/FlowerOrdering";
-          String uName="admindb";
-          String uPass="admindb";
+       
         try {    
             Connection con = DriverManager.getConnection(host, uName, uPass);
         } catch (SQLException ex) {
@@ -210,15 +210,21 @@ public class OrderPickup extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         try{
-            String query = "Insert into PAYMENT values(?, ?, ?, ?, ?)";
-            pst = con.prepareStatement(query);
-            pst.setString(1, "PM00001");
-            pst.setString(2, jTextField5.getText());
-            pst.setString(3, jTextField1.getText());
-            pst.setString(4, jComboBox1.getSelectedItem().toString());
-            pst.setDouble(5, Double.parseDouble(jTextField4.getText()));
+            String PaymentID = "PM00001";
+            String CustomerID = jTextField5.getText();
+            String OrderID = jTextField1.getText();
+            String PaymentMethod = jComboBox1.getSelectedItem().toString();
+            Double PaymentAmount = Double.parseDouble(jTextField4.getText());
             
-            pst.execute();
+            String query = "INSERT INTO PAYMENT VALUES(?, ?, ?, ?, ?)";
+            pst = con.prepareStatement(query);
+            pst.setString(1, PaymentID);
+            pst.setString(2, CustomerID);
+            pst.setString(3, OrderID);
+            pst.setString(4, PaymentMethod);
+            pst.setDouble(5, PaymentAmount);
+            
+            pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Payment Success!");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);

@@ -4,18 +4,42 @@
  * and open the template in the editor.
  */
 package flowerorderingsystem;
-
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+import net.proteanit.sql.DbUtils;
 /**
  *
  * @author Evel
  */
 public class TodaysPickup extends javax.swing.JFrame {
 
+    Connection con;
+    ResultSet rs;
+    PreparedStatement pst;
+    String host = "jdbc:derby://localhost:1527/FlowerOrdering";
+    String uName="admindb";
+    String uPass="admindb";
     /**
      * Creates new form TodaysPickup
      */
-    public TodaysPickup() {
+    public TodaysPickup() throws SQLException {
         initComponents();
+        Connection con = DriverManager.getConnection(host, uName, uPass);
+        updateTable();
+    }
+    
+    private void updateTable(){
+        
+        try {
+            String sql = "SELECT * FROM ORDERS";
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable2.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 
     /**
@@ -26,7 +50,6 @@ public class TodaysPickup extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         FlowerOrderingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("FlowerOrderingPU").createEntityManager();
         ordersQuery = java.beans.Beans.isDesignTime() ? null : FlowerOrderingPUEntityManager.createQuery("SELECT o FROM Orders o");
@@ -37,36 +60,40 @@ public class TodaysPickup extends javax.swing.JFrame {
         ordersList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : ordersQuery2.getResultList();
         ordersQuery3 = java.beans.Beans.isDesignTime() ? null : FlowerOrderingPUEntityManager.createQuery("SELECT o FROM Orders o");
         ordersList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : ordersQuery3.getResultList();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setAutoCreateRowSorter(true);
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, ordersList3, jTable1);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(jTable1);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -101,15 +128,19 @@ public class TodaysPickup extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TodaysPickup().setVisible(true);
+                try {
+                    new TodaysPickup().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TodaysPickup.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager FlowerOrderingPUEntityManager;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     private java.util.List<flowerorderingsystem.Orders> ordersList;
     private java.util.List<flowerorderingsystem.Orders> ordersList1;
     private java.util.List<flowerorderingsystem.Orders> ordersList2;
@@ -118,6 +149,5 @@ public class TodaysPickup extends javax.swing.JFrame {
     private javax.persistence.Query ordersQuery1;
     private javax.persistence.Query ordersQuery2;
     private javax.persistence.Query ordersQuery3;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
