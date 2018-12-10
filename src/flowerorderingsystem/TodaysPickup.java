@@ -15,9 +15,9 @@ import net.proteanit.sql.DbUtils;
  */
 public class TodaysPickup extends javax.swing.JFrame {
 
-    Connection con;
-    ResultSet rs;
-    PreparedStatement pst;
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
     String host = "jdbc:derby://localhost:1527/FlowerOrdering";
     String uName="admindb";
     String uPass="admindb";
@@ -26,7 +26,7 @@ public class TodaysPickup extends javax.swing.JFrame {
      */
     public TodaysPickup() throws SQLException {
         initComponents();
-        Connection con = DriverManager.getConnection(host, uName, uPass);
+        Connection con = DriverManager.getConnection(host,uName,uPass);
         updateTable();
     }
     
@@ -67,13 +67,13 @@ public class TodaysPickup extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "OrderID", "Order Description", "CustomerID", "Pickup Date", "Total Amount"
             }
         ));
         jScrollPane2.setViewportView(jTable2);

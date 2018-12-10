@@ -5,6 +5,10 @@
  */
 package flowerorderingsystem;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Evel
@@ -147,7 +151,7 @@ public class OrderPickupMenu extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        new TodaysPickup().setVisible(true);
+        new PickupToday().setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
