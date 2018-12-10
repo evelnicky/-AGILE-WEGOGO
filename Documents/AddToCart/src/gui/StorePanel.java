@@ -22,6 +22,7 @@ public class StorePanel extends JPanel {
 	private JScrollPane scrollPane;
 	private NavPanel NavPanel;
 	private FinancePanel FinancePanel;
+        private HistoryPanel HistoryPanel;
 	private CheckoutPanel CheckoutPanel;
 	private FooterPanel FooterPanel;
 	private int storeStatus = 0;
@@ -89,6 +90,14 @@ public class StorePanel extends JPanel {
 		storeStatus = 5;
 	}
 
+        public void viewHistory(List<String[]> history) {
+		removeProductsFromDisplay();
+		HistoryPanel = new HistoryPanel(history);
+		ProductsPanel.add(HistoryPanel.getPanel());
+		store.add(ProductsPanel, BorderLayout.CENTER);
+		storeStatus = 6;
+	}
+        
 	/**
 	 * Displays the cart page.
 	 *
@@ -247,6 +256,8 @@ public class StorePanel extends JPanel {
 	public String getCurrentView() {
 		if (storeStatus == 5)
 			return "Finance";
+                else if (storeStatus == 6)
+			return "History";
 		else if (storeStatus == 4)
 			return "Admin";
 		else if (storeStatus == 3)

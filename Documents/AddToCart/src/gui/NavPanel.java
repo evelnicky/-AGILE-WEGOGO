@@ -18,6 +18,7 @@ public class NavPanel extends JPanel {
 	private JButton btnFinance;
 	private JButton btnCheckout;
 	private JButton btnLogout;
+        private JButton btnHistory;
 	private JLabel welcome;
 
 	/**
@@ -41,6 +42,7 @@ public class NavPanel extends JPanel {
 
 	public void addStoreListener(ActionListener listener) {
 		btnStore.addActionListener(listener);
+                System.out.println("Hi");
 	}
 	
 	public void addAdminListener(ActionListener listener) {
@@ -53,6 +55,11 @@ public class NavPanel extends JPanel {
 
 	public void addCartListener(ActionListener listener) {
 		btnCheckout.addActionListener(listener);
+	}
+        
+        public void addHistoryListener(ActionListener listener) {
+		btnHistory.addActionListener(listener);
+                System.out.println("Hi");
 	}
 
 	public void addLogoutListener(ActionListener listener) {
@@ -82,6 +89,9 @@ public class NavPanel extends JPanel {
 		btnStore = new JButton("Store");
 		NavPanel.add(btnStore);
 		
+                btnHistory = new JButton("History");
+		NavPanel.add(btnHistory);
+		
 		btnCheckout = new JButton("Shopping Cart");
 		NavPanel.add(btnCheckout);
 	}
@@ -92,5 +102,8 @@ public class NavPanel extends JPanel {
 
 		btnCheckout = new JButton("Shopping Cart");
 		NavPanel.add(btnCheckout);
+                
+                btnHistory = new JButton("History");
+		NavPanel.add(btnHistory);
 	}
 }

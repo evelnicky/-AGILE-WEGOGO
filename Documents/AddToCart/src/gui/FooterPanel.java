@@ -16,7 +16,6 @@ public class FooterPanel extends JPanel {
 	private static JButton btnCheckout;
 	private static JButton btnCompleteTransaction;
 	private static JLabel carttotal;
-        private static JButton btnBack;
 
 	/**
 	 * Create the panel.
@@ -31,7 +30,7 @@ public class FooterPanel extends JPanel {
 		FooterPanel.add(btnCheckout);
 
 		btnCompleteTransaction = new JButton("Complete Purchase");
-                btnBack = new JButton("Back");
+                
 	}
 
 	/**
@@ -62,7 +61,6 @@ public class FooterPanel extends JPanel {
 	 */
 	public static void addCompleteTransactionBtn(Controller.CompleteTransactionListener completeTransactionListener) {
 		FooterPanel.add(btnCompleteTransaction);
-                FooterPanel.add(btnBack);
 	}
 
 	/**
@@ -70,7 +68,6 @@ public class FooterPanel extends JPanel {
 	 */
 	public void removeCompleteTransactionBtn() {
 		FooterPanel.remove(btnCompleteTransaction);
-                FooterPanel.remove(btnBack);
 	}
 
 	/**
@@ -79,7 +76,6 @@ public class FooterPanel extends JPanel {
 	public static void addCheckoutBtn() {
 		FooterPanel.add(btnCheckout);
 		FooterPanel.remove(btnCompleteTransaction);
-                FooterPanel.remove(btnBack);
 	}
 
 	/**
@@ -88,7 +84,6 @@ public class FooterPanel extends JPanel {
 	public void removeCheckoutBtn() {
 		FooterPanel.remove(btnCheckout);
 		FooterPanel.add(btnCompleteTransaction);
-                FooterPanel.add(btnBack);
 	}
 
 	/**

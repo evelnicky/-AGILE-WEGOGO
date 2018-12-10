@@ -153,7 +153,7 @@ public class ProductPanel extends JPanel {
 		product.setBackground(new Color(235, 232, 217));
 		product.setBorder(new EmptyBorder(10, 5, 10, 5));
 
-		product.add(prodImage("img//" + Name + ".png"), BorderLayout.WEST);
+		product.add(prodImage("img/" + Name + ".jpg"), BorderLayout.WEST);
 		product.add(new JLabel(Name), BorderLayout.NORTH);
 
 		JPanel checkout = new JPanel(new BorderLayout());

@@ -14,7 +14,11 @@ import java.util.List;
 
 import au.com.bytecode.opencsv.*;
 import control.Controller;
+import gui.HistoryPanel;
 import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +27,8 @@ public class Model {
 	private int AccountType;
 	private String Username;
 	private String CSVLocation;
+        private String CSVLocation2;
+        private String CSVLocation3;
         String userName;
 
         Controller controller = new Controller();
@@ -137,7 +143,7 @@ public class Model {
 	 */
 	public void completeTransaction(String firstname, String lastname, String cc, String email, String address) {
 		List<String[]> sales = getCSV("sales.csv");
-		String[] newSale = new String[8];
+		String[] newSale = new String[10];
 
 		newSale[0] = String.valueOf(getCartTotal());// total
 		newSale[1] = String.valueOf(getCartCost());// cost
@@ -147,6 +153,8 @@ public class Model {
 		newSale[5] = cc;// credit card
 		newSale[6] = email;// email
 		newSale[7] = address;// address
+                newSale[8] = getCurrentTimeUsingDate();
+                newSale[9] = "pending";
 
 		sales.add(newSale);
 		writeCSV(sales, "sales.csv", false);
@@ -278,10 +286,21 @@ public class Model {
 	public void setAccountUsername(String string) {
 		Username = string;
 		CSVLocation = Username + "_cart.csv";
+                CSVLocation2 = Username + "_delivery.csv";
+                CSVLocation3 = Username + "_invoice.csv";
+                
 	}
 
 	public String getAccountCSVLocation() {
 		return CSVLocation;
+	}
+        
+        public String getAccountCSVLocation2() {
+		return CSVLocation2;
+	}
+        
+        public String getAccountCSVLocation3() {
+		return CSVLocation3;
 	}
 
 	/**
@@ -352,17 +371,100 @@ public class Model {
 		}
 	}
         
-        /*public void addCSV(String csvlocation){
-            this.userName = userName;
-            String CsvLocation = userName + "_delivery.csv";
-            FileWriter newfile;
+        public void deliveryCSV(){
+                List<String[]> delivery = getCSV(Username + "_cart.csv");
+                writeCSV(delivery, Username + "_delivery.csv", false);
+                
+                //List<String[]> newDelivery = getCSV(Username + "_cart.csv");
+                
+                //getCurrentTimeUsingDate();
+                
+                //sales.add(newSale);
+                
+        }
+        
+        public String getCurrentTimeUsingDate() {
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            String strDate = dateFormat.format(date); 
+            return strDate;
+}
+        
+        public void invoiceCSV(){
+            List<String[]> invoice = getCSV(Username + "_delivery.csv");
+            List<String[]> invoice2 = getCSV(Username + "_invoice.csv");
+		String[] newInvoice = new String[9];
+
+                String date = getCurrentTimeUsingDate();
+                
+                String total = String.valueOf(getCartTotal());
+                
+                //while (String[] invoice.equals("null"))
+                for (String[] product : invoice){
+                    String id = "", name = "", type = "", price = "", invoiceprice = "", quantity = "", 
+                         status = "pending";
+                    
+                    id = product[0];
+                    name = product[1];
+                    type = product[2];
+                    price = product[3];
+                    invoiceprice = product[4];
+                    quantity = product[5];
+                
+                    System.out.println(invoice);
+                
+                    newInvoice[0] = id;
+                    newInvoice[1] = name;
+                    newInvoice[2] = type;
+                    newInvoice[3] = price;
+                    newInvoice[4] = invoiceprice;
+                    newInvoice[5] = quantity;
+                    newInvoice[6] = total;
+                    newInvoice[7] = date;
+                    newInvoice[8] = status;
+                    
+                    System.out.println(newInvoice[1]);
+                    invoice2.add(newInvoice);
+                    writeCSV(invoice2, Username + "_invoice.csv", false);
+                }
+                
+                
+		
+                
+        }
+        
+        public List<String[]> getHistory(){
+//            List<String[]> invoice = getCSV(Username + "_invoice.csv");
+//            
+//            for (String[] product : invoice){
+//                    String id = "", name = "", type = "", price = "", invoiceprice = "", quantity = "", 
+//                         status = "pending";
+//                    
+//                    id = product[0];
+//                    name = product[1];
+//                    type = product[2];
+//                    price = product[3];
+//                    invoiceprice = product[4];
+//                    quantity = product[5];
+//            }
             try {
-                Files.copy(csvlocation, CsvLocation);
-            } catch (IOException ex) {
-                Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-            }
-			
-        }*/
+                        HistoryPanel history = new HistoryPanel();
+                        history.getUserName();
+			CSVReader reader = new CSVReader(new FileReader("sales.csv"));
+			List<String[]> readerToReturn = reader.readAll();
+			reader.close();
+			return readerToReturn;
+		} catch (FileNotFoundException fnf) {
+			createAccountCSV("sales.csv");
+			getCSV("sales.csv");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	
+        }
+        
 	/**
 	 * Logs a user in to the store
 	 *
@@ -409,10 +511,11 @@ public class Model {
 	 *         where taken
 	 */
 	public boolean signUpUser(String userName, char[] userPassword, int accountType) {
-            controller.getUserName(userName);
+            
 		String filepath = "accounts.csv";
 		String csvlocation = userName + "_cart.csv";
                 String csvlocation2 = userName + "_delivery.csv";
+                String csvlocation3 = userName + "_invoice.csv";
 		String stringPassword = new String(userPassword);
 		String[] nextUser;
 		try {
@@ -430,8 +533,14 @@ public class Model {
 			writer.close();
 			System.out.println("Creating New File");
 			FileWriter newfile = new FileWriter(csvlocation);
+                        FileWriter newfile2 = new FileWriter(csvlocation2);
+                        FileWriter newfile3 = new FileWriter(csvlocation3);
 			newfile.write("");
 			newfile.close();
+                        newfile2.write("");
+			newfile2.close();
+                        newfile3.write("");
+			newfile3.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -517,5 +626,7 @@ public class Model {
 		}
 		return total;
 	}
-
+        public String getUserName(){
+            return Username;
+        }
 }

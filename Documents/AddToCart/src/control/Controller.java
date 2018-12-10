@@ -56,6 +56,7 @@ public class Controller {
 					store = new StorePanel(model.getAccountTypeString());
 					store.getNav().addStoreListener(new StoreListener());
 					store.getNav().addCartListener(new CartListener());
+                                        store.getNav().addHistoryListener(new HistoryListener());
 					store.getNav().addLogoutListener(new LogoutListener());
 					store.getFooter().addCheckoutListener(new CheckoutListener());
 					store.getFooter().completeTransactionListener(new CompleteTransactionListener());
@@ -129,6 +130,12 @@ public class Controller {
 		}
 	}
 
+        class HistoryListener implements ActionListener {
+		public void actionPerformed(ActionEvent a) {
+			displayHistory();
+		}
+	}
+        
 	class LogoutListener implements ActionListener {
 		public void actionPerformed(ActionEvent a) {
 			displayLogin();
@@ -408,6 +415,24 @@ public class Controller {
 			view.viewRefresh();
 		}
 	}
+        
+        //display History
+        public void displayHistory(){
+            
+            if (store.getCurrentView().equals("History")) {
+			System.out.println("You're already on the history page.");
+		} else {
+			view.addPanel(store.getPanel());
+			store.removeProductsFromDisplay();
+			store.viewHistory(model.getCSV("sales.csv"));
+			
+			//FooterPanel.addCheckoutBtn();
+			//FinancePanel.setRevenue(model.getSaleTotal());
+			//FinancePanel.setCost(model.getSaleCost());
+			//FinancePanel.setProfit(model.getSaleTotal() - model.getSaleCost());
+			view.viewRefresh();
+		}
+        }
 	
 	/**
 	 * Displays the cart
@@ -492,7 +517,8 @@ public class Controller {
 		store.getCheckout();
 		model.completeTransaction(CheckoutPanel.getFirstName(), CheckoutPanel.getLastName(), CheckoutPanel.getCreditCard(), CheckoutPanel.getEmail(), CheckoutPanel.getAddress());
                 
-                //model.addCSV(userName);
+                model.deliveryCSV();
+                model.invoiceCSV();
 		model.clearCSV(model.getAccountCSVLocation());
 		
 		store.removeProductsFromDisplay();
@@ -511,8 +537,4 @@ public class Controller {
 			view.viewRefresh();
 		}
 	}
-        
-        public void getUserName(String userName){
-            this.userName = userName;
-        }
 }

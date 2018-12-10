@@ -36,7 +36,7 @@ public class FinancePanel extends JPanel {
 
 		for (String[] sale : finances) {
 			if (sale[0].equals("Total")) {
-				JPanel FinanceSalelabels = new JPanel(new GridLayout(0, 8));
+				JPanel FinanceSalelabels = new JPanel(new GridLayout(0, 10));
 				FinanceSalelabels.setBackground(new Color(200, 200, 200));
 				FinanceSalelabels.add(new JLabel("total"));
 				FinanceSalelabels.add(new JLabel("cost"));
@@ -46,11 +46,13 @@ public class FinancePanel extends JPanel {
 				FinanceSalelabels.add(new JLabel("cc"));
 				FinanceSalelabels.add(new JLabel("email"));
 				FinanceSalelabels.add(new JLabel("address"));
+                                FinanceSalelabels.add(new JLabel("time"));
+                                FinanceSalelabels.add(new JLabel("status"));
 				FinanceSalelabels.setPreferredSize(new Dimension(600, 25));
 				financePanel.add(FinanceSalelabels);
 				continue;
 			} else {
-				JPanel FinanceSale = new JPanel(new GridLayout(0, 8));
+				JPanel FinanceSale = new JPanel(new GridLayout(0, 10));
 				FinanceSale.setBackground(new Color(200, 200, 200));
 				FinanceSale.add(new JLabel(sale[0]));
 				FinanceSale.add(new JLabel(sale[1]));
@@ -60,6 +62,8 @@ public class FinancePanel extends JPanel {
 				FinanceSale.add(new JLabel(sale[5]));
 				FinanceSale.add(new JLabel(sale[6]));
 				FinanceSale.add(new JLabel(sale[7]));
+                                FinanceSale.add(new JLabel(sale[8]));
+                                FinanceSale.add(new JLabel(sale[9]));
 				FinanceSale.setPreferredSize(new Dimension(600, 25));
 				financePanel.add(FinanceSale);
 			}
