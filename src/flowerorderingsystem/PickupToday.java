@@ -69,22 +69,21 @@ public class PickupToday extends javax.swing.JFrame {
     // added rows from arraylist to jtable
     public void addRowToJTable()
     {
-        Date date = new Date();
-        String strDateFormat = "dd-MM-yyyy";
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         ArrayList<User> list = ListUsers();
         Object rowData[] = new Object[6];
         for(int i = 0; i < list.size(); i++)
         {
-            
             rowData[0] = list.get(i).orderID;
             rowData[1] = list.get(i).orderDesc;
             rowData[2] = list.get(i).custID;
             rowData[3] = list.get(i).totalAmount;
             rowData[4] = list.get(i).pickupdate;
             rowData[5] = list.get(i).orderStatus;
+            if(rowData[4].equals(currentDate))
+            {
             model.addRow(rowData);
-            
+            }
         }
                 
     }
