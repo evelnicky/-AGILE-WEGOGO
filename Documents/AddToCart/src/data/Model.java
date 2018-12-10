@@ -30,6 +30,7 @@ public class Model {
         private String CSVLocation2;
         private String CSVLocation3;
         String userName;
+        private HistoryPanel history;
 
         Controller controller = new Controller();
         
@@ -324,6 +325,8 @@ public class Model {
 			CSVReader reader = new CSVReader(new FileReader(csvlocation));
 			List<String[]> readerToReturn = reader.readAll();
 			reader.close();
+                        
+                        //history.getUserName(Username);
 			return readerToReturn;
 		} catch (FileNotFoundException fnf) {
 			createAccountCSV(csvlocation);
@@ -434,7 +437,7 @@ public class Model {
                 
         }
         
-        public List<String[]> getHistory(){
+        //public List<String[]> getHistory(){
 //            List<String[]> invoice = getCSV(Username + "_invoice.csv");
 //            
 //            for (String[] product : invoice){
@@ -448,22 +451,23 @@ public class Model {
 //                    invoiceprice = product[4];
 //                    quantity = product[5];
 //            }
-            try {
-                        HistoryPanel history = new HistoryPanel();
-                        history.getUserName();
-			CSVReader reader = new CSVReader(new FileReader("sales.csv"));
-			List<String[]> readerToReturn = reader.readAll();
-			reader.close();
-			return readerToReturn;
-		} catch (FileNotFoundException fnf) {
-			createAccountCSV("sales.csv");
-			getCSV("sales.csv");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	
-        }
+//            try {
+//                        HistoryPanel history = new HistoryPanel();
+//                        System.out.println(Username);
+//                        history.getUserName(Username);
+//			CSVReader reader = new CSVReader(new FileReader("sales.csv"));
+//			List<String[]> readerToReturn = reader.readAll();
+//			reader.close();
+//			return readerToReturn;
+//		} catch (FileNotFoundException fnf) {
+//			createAccountCSV("sales.csv");
+//			getCSV("sales.csv");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	
+//        }
         
 	/**
 	 * Logs a user in to the store
@@ -626,7 +630,7 @@ public class Model {
 		}
 		return total;
 	}
-        public String getUserName(){
-            return Username;
+        public void getUserName(){
+            this.Username = Username;
         }
 }

@@ -34,6 +34,7 @@ public class HistoryPanel extends JFrame
 		JLabel financelabel = new JLabel("History...");
 		historyPanel.add(financelabel);
                 //getUserName();
+                System.out.println(username);
                 String[] nextUser;
                 
                 //System.out.println(model.getAccountUsername());
@@ -58,7 +59,7 @@ public class HistoryPanel extends JFrame
 				historyPanel.add(FinanceSalelabels);
 				continue;
 			} else {
-                            
+                            //if (sale[0].equals(username)){
 				JPanel FinanceSale = new JPanel(new GridLayout(0, 10));
 				FinanceSale.setBackground(new Color(200, 200, 200));
 				FinanceSale.add(new JLabel(sale[0]));
@@ -73,8 +74,8 @@ public class HistoryPanel extends JFrame
                                 FinanceSale.add(new JLabel(sale[9]));
 				FinanceSale.setPreferredSize(new Dimension(1200, 25));
 				historyPanel.add(FinanceSale);
-                                //}
-			}
+                                }
+			//}
 		}
 		historyinfo = new JPanel(new WrapLayout());
 		historyPanel.add(historyinfo);
@@ -95,8 +96,7 @@ public class HistoryPanel extends JFrame
 	}
         
         public void getUserName(){
-            username = model.getAccountUsername();
-                            System.out.println(username);
+            //username = model.Username;
         }
 
      

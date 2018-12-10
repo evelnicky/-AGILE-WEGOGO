@@ -518,7 +518,7 @@ public class Controller {
 		model.completeTransaction(CheckoutPanel.getFirstName(), CheckoutPanel.getLastName(), CheckoutPanel.getCreditCard(), CheckoutPanel.getEmail(), CheckoutPanel.getAddress());
                 
                 model.deliveryCSV();
-                model.invoiceCSV();
+                //model.invoiceCSV();
 		model.clearCSV(model.getAccountCSVLocation());
 		
 		store.removeProductsFromDisplay();
@@ -537,4 +537,8 @@ public class Controller {
 			view.viewRefresh();
 		}
 	}
+        
+        public void getUserName(String username){
+            userName = username;
+        }
 }
