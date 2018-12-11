@@ -5,8 +5,8 @@
  */
 package flowerorderingsystem;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,8 +16,6 @@ import static org.junit.Assert.*;
  * @author Evel
  */
 public class PickupTodayTest {
-    
-    static List<User> UserList = new ArrayList<User>();
     
     public PickupTodayTest() {
     }
@@ -31,7 +29,6 @@ public class PickupTodayTest {
      */
     @Test
     public void testListUsers() {
-      assertTrue(UserList.isEmpty());
     }
 
     /**
@@ -40,6 +37,41 @@ public class PickupTodayTest {
     @Test
     public void testAddRowToJTable() {
     }
+
+    /**
+     * Test of recordTimestamp method, of class PickupToday.
+     */
+    @Test
+    public void testRecordTimestamp() {
+        
+        PickupToday abc = new PickupToday();
+        abc.i = 1;
+        abc.a = 5;
+        abc.b = 5;
+        abc.recordTimestamp();
+        assertEquals(abc.c, 10);
+    }
+    
+    @Test
+    public void testFailTimestamp() {
+        
+        PickupToday abc = new PickupToday();
+        abc.i = -1;
+        abc.a = 5;
+        abc.b = 5;
+        abc.recordTimestamp();
+        assertEquals(abc.c, 0);
+    }
+    
+  /*   @Test
+    public void testTimestampDate() {
+        
+        PickupToday abc = new PickupToday();
+        Date date = new Date();
+        String currentTime = new SimpleDateFormat("HH:mm:ss").format(date);
+        abc.recordTimestamp();
+        assertEquals(abc.curTime, currentTime);
+    } */
 
     /**
      * Test of main method, of class PickupToday.

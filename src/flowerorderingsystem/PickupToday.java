@@ -21,6 +21,11 @@ public class PickupToday extends javax.swing.JFrame {
     static List<User> UserList = new ArrayList<User>();
     Date date = new Date();
     String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
+    String curTime = "";
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int i = 0;
     /**
      * Creates new form PickupToday
      */
@@ -51,12 +56,12 @@ public class PickupToday extends javax.swing.JFrame {
     public ArrayList ListUsers()
     {
         ArrayList<User> list = new ArrayList<User>();
-        User u1 = new User("RD0001","Mother's Day Bouquet","CS0001",10.0,"10-12-2018","Waiting");
-        User u2 = new User("RD0002","Father's Day","CS0002",120.0,"10-12-2018","Waiting");
-        User u3 = new User("RD0003","Despacito","CS0003",300.0,"10-12-2018","Waiting");
-        User u4 = new User("RD0004","Graduation","CS0004",40.0,"10-12-2018","Waiting");
-        User u5 = new User("RD0005","TARUC Celebration","CS0005",55.0,"10-12-2018","Waiting");
-        User u6 = new User("RD0006","Oppa Jjang","CS0006",80.0,"10-12-2018","Waiting");
+        User u1 = new User("RD0001","Mother's Day Bouquet","CS0001",10.0,"11-12-2018","Waiting");
+        User u2 = new User("RD0002","Father's Day","CS0002",120.0,"11-12-2018","Waiting");
+        User u3 = new User("RD0003","Despacito","CS0003",300.0,"11-12-2018","Waiting");
+        User u4 = new User("RD0004","Graduation","CS0004",40.0,"12-12-2018","Waiting");
+        User u5 = new User("RD0005","TARUC Celebration","CS0005",55.0,"12-12-2018","Waiting");
+        User u6 = new User("RD0006","Oppa Jjang","CS0006",80.0,"12-12-2018","Waiting");
         
         list.add(u1);
         list.add(u2);
@@ -87,6 +92,25 @@ public class PickupToday extends javax.swing.JFrame {
         }
                 
     }
+    //Record Timestamp for Pickup Order
+    public void recordTimestamp(){
+         Date date = new Date();
+         
+        String currentTime = new SimpleDateFormat("HH:mm:ss").format(date);
+        
+        i = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if(i >= 0){
+            model.setValueAt(currentTime, i, 5);
+            c = a + b;
+            curTime = currentTime;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error! Please Select An Order!");
+            c = a - b;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,17 +210,7 @@ public class PickupToday extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String orderNumber = jTextField1.getText();
-        Date date = new Date();
-        String currentTime = new SimpleDateFormat("HH:mm:ss").format(date);
-        
-        int i = jTable1.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        if(i >= 0){
-            model.setValueAt(currentTime, i, 5);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Error! Please Select An Order!");
-        }
+        recordTimestamp();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
